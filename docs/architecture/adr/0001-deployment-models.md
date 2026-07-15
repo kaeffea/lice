@@ -1,6 +1,6 @@
 # ADR 0001 — Modelos de implantação
 
-- **Status:** Proposta (aguardando validação no PR)
+- **Status:** Aceita
 - **Data:** 2026-07-15
 
 ## Contexto

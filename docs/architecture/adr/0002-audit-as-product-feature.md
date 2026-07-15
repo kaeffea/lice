@@ -1,6 +1,6 @@
 # ADR 0002 — Auditoria como funcionalidade do produto
 
-- **Status:** Proposta (aguardando validação no PR)
+- **Status:** Aceita
 - **Data:** 2026-07-15
 
 ## Contexto
