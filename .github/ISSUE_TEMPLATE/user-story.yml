@@ -1,0 +1,88 @@
+name: História de usuário
+description: Planeje uma fatia vertical pequena, demonstrável e testável.
+title: "[História]: "
+labels:
+  - "type: story"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Descreva um resultado observável. A história só estará concluída depois da validação do usuário.
+
+  - type: textarea
+    id: story
+    attributes:
+      label: História
+      description: Identifique a pessoa, a necessidade e o valor esperado.
+      placeholder: Como operador da plataforma, quero criar uma instituição para que ela possa iniciar sua configuração.
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Escopo desta fatia
+      description: Declare o que funcionará de ponta a ponta e o que ficará explicitamente de fora.
+      placeholder: |
+        Inclui:
+        - ...
+
+        Não inclui:
+        - ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: business-rules
+    attributes:
+      label: Regras de negócio
+      description: Liste somente regras que mudam ou restringem o comportamento.
+      placeholder: |
+        - A sigla deve ser única entre instituições ativas.
+        - A criação e o evento de auditoria devem ocorrer na mesma transação.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Critérios de aceite
+      description: Use cenários verificáveis, incluindo negações e limites relevantes.
+      placeholder: |
+        - [ ] Dado ..., quando ..., então ...
+        - [ ] Dado ..., quando ..., então a operação é negada e auditada.
+    validations:
+      required: true
+
+  - type: textarea
+    id: cross-cutting
+    attributes:
+      label: Autorizações, dados e auditoria
+      description: Registre perfis e escopos, dados sensíveis envolvidos e eventos visíveis na interface. Use “Não se aplica” com justificativa.
+      placeholder: Quem pode executar? Em qual tenant ou unidade? O que deve ser auditado e quem pode consultar?
+    validations:
+      required: true
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: Roteiro de validação
+      description: Explique como o usuário comprovará o resultado na prática.
+      placeholder: |
+        1. Entrar como ...
+        2. Executar ...
+        3. Confirmar ...
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: ready
+    attributes:
+      label: Pronta para desenvolvimento
+      options:
+        - label: A história cabe em uma fatia vertical pequena e demonstrável.
+          required: true
+        - label: As dependências e decisões indispensáveis estão resolvidas ou vinculadas.
+          required: true
+        - label: Os critérios distinguem claramente sucesso, erro e fora do escopo.
+          required: true
