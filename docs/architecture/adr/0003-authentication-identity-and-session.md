@@ -1,6 +1,6 @@
 # ADR 0003 — Autenticação, identidade e sessão
 
-- **Status:** Proposta
+- **Status:** Aceita
 - **Data:** 2026-07-15
 
 ## Contexto
