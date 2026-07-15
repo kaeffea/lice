@@ -1,0 +1,78 @@
+name: Decisão de produto ou arquitetura
+description: Registre uma escolha, suas alternativas e consequências antes de depender dela.
+title: "[Decisão]: "
+labels:
+  - "type: decision"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Uma decisão aceita define direção, mas não significa que algo já foi implementado.
+
+  - type: dropdown
+    id: status
+    attributes:
+      label: Estado da decisão
+      options:
+        - Proposta
+        - Aceita
+        - Substituída
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto e problema
+      description: Explique a necessidade, as restrições e por que a decisão precisa ser tomada agora.
+    validations:
+      required: true
+
+  - type: textarea
+    id: drivers
+    attributes:
+      label: Direcionadores
+      description: Liste os critérios que realmente diferenciam as alternativas.
+      placeholder: Portabilidade, segurança, prazo do MVP, custo operacional.
+    validations:
+      required: true
+
+  - type: textarea
+    id: options
+    attributes:
+      label: Alternativas consideradas
+      description: Resuma benefícios, custos e riscos de cada opção viável.
+    validations:
+      required: true
+
+  - type: textarea
+    id: decision
+    attributes:
+      label: Decisão proposta
+      description: Declare a escolha e seu limite de aplicação.
+    validations:
+      required: true
+
+  - type: textarea
+    id: consequences
+    attributes:
+      label: Consequências e reversibilidade
+      description: Registre ganhos, custos assumidos, riscos e como a escolha pode ser revista.
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impacto no plano
+      description: Vincule histórias, migrações ou documentação necessárias. Escreva “Nenhum” se a decisão não exigir implementação imediata.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmação
+      options:
+        - label: A decisão diferencia claramente o que foi escolhido do que já está implementado.
+          required: true

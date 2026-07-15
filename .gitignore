@@ -1,0 +1,27 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# JavaScript / TypeScript
+node_modules/
+.next/
+out/
+
+# Go
+bin/
+*.test
+coverage.out
+
+# Generic build and test output
+dist/
+build/
+coverage/
+tmp/
+*.log
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
