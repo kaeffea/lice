@@ -184,7 +184,11 @@ Falhas de credencial anteriores ao callback pertencem inicialmente à auditoria 
 
 ## Impacto nas próximas histórias
 
-A issue #3 deverá implementar e provar somente o login do operador global, o bootstrap, a sessão, a negação, o logout e a auditoria mínima usando o contrato acima. A reprodução local incluirá Keycloak e seus dados sintéticos; esta ADR, sozinha, não afirma que esse ambiente exista.
+A issue #3 materializa somente o login do operador global, o bootstrap, a
+sessão, a negação, o logout e a auditoria mínima usando o contrato acima. O
+comportamento implementado e sua reprodução com Keycloak e dados sintéticos
+estão descritos na [fundação de identidade](../security-foundation.md) e no
+[ambiente local](../../development/local.md).
 
 A issue #4 manterá convite, pessoa, papel e escopo no LICE. O papel privilegiado só se tornará utilizável após aceite e comprovação da identidade, e o envio externo do convite terá estados e outbox próprios.
 

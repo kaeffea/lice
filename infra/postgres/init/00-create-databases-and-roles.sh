@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+required=(
+  KEYCLOAK_DB_PASSWORD
+  LICE_MIGRATOR_PASSWORD
+  LICE_RUNTIME_PASSWORD
+  POSTGRES_DB
+  POSTGRES_USER
+)
+
+for name in "${required[@]}"; do
+  if [[ -z "${!name:-}" ]]; then
+    echo "Variavel obrigatoria ausente no init do PostgreSQL: ${name}" >&2
+    exit 1
+  fi
+done
+
+psql \
+  --set=ON_ERROR_STOP=1 \
+  --username "$POSTGRES_USER" \
+  --dbname "$POSTGRES_DB" \
+  --set=keycloak_password="$KEYCLOAK_DB_PASSWORD" \
+  --set=lice_migrator_password="$LICE_MIGRATOR_PASSWORD" \
+  --set=lice_runtime_password="$LICE_RUNTIME_PASSWORD" <<'SQL'
+SELECT format(
+    'CREATE ROLE keycloak LOGIN PASSWORD %L NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOREPLICATION NOBYPASSRLS',
+    :'keycloak_password'
+)
+WHERE NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'keycloak') \gexec
+
+SELECT format(
+    'ALTER ROLE keycloak WITH LOGIN PASSWORD %L NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOREPLICATION NOBYPASSRLS',
+    :'keycloak_password'
+) \gexec
+
+SELECT format(
+    'CREATE ROLE lice_migrator LOGIN PASSWORD %L NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOREPLICATION NOBYPASSRLS',
+    :'lice_migrator_password'
+)
+WHERE NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'lice_migrator') \gexec
+
+SELECT format(
+    'ALTER ROLE lice_migrator WITH LOGIN PASSWORD %L NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOREPLICATION NOBYPASSRLS',
+    :'lice_migrator_password'
+) \gexec
+
+SELECT format(
+    'CREATE ROLE lice_runtime LOGIN PASSWORD %L NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOREPLICATION NOBYPASSRLS',
+    :'lice_runtime_password'
+)
+WHERE NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'lice_runtime') \gexec
+
+SELECT format(
+    'ALTER ROLE lice_runtime WITH LOGIN PASSWORD %L NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOREPLICATION NOBYPASSRLS',
+    :'lice_runtime_password'
+) \gexec
+
+SELECT 'CREATE DATABASE keycloak OWNER keycloak TEMPLATE template0 ENCODING ''UTF8'''
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'keycloak') \gexec
+
+SELECT 'CREATE DATABASE lice OWNER lice_migrator TEMPLATE template0 ENCODING ''UTF8'''
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'lice') \gexec
+
+REVOKE CONNECT ON DATABASE postgres FROM PUBLIC;
+GRANT CONNECT ON DATABASE postgres TO postgres;
+
+REVOKE ALL ON DATABASE keycloak FROM PUBLIC;
+GRANT CONNECT, TEMPORARY ON DATABASE keycloak TO keycloak;
+
+REVOKE ALL ON DATABASE lice FROM PUBLIC;
+GRANT CONNECT, TEMPORARY ON DATABASE lice TO lice_migrator;
+GRANT CONNECT ON DATABASE lice TO lice_runtime;
+SQL
+
+psql --set=ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname keycloak <<'SQL'
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+GRANT USAGE, CREATE ON SCHEMA public TO keycloak;
+ALTER DEFAULT PRIVILEGES FOR ROLE keycloak REVOKE ALL ON TABLES FROM PUBLIC;
+ALTER DEFAULT PRIVILEGES FOR ROLE keycloak REVOKE ALL ON SEQUENCES FROM PUBLIC;
+ALTER DEFAULT PRIVILEGES FOR ROLE keycloak REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;
+SQL
+
+psql --set=ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname lice <<'SQL'
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+GRANT USAGE, CREATE ON SCHEMA public TO lice_migrator;
+GRANT USAGE ON SCHEMA public TO lice_runtime;
+ALTER DEFAULT PRIVILEGES FOR ROLE lice_migrator REVOKE ALL ON TABLES FROM PUBLIC;
+ALTER DEFAULT PRIVILEGES FOR ROLE lice_migrator REVOKE ALL ON SEQUENCES FROM PUBLIC;
+ALTER DEFAULT PRIVILEGES FOR ROLE lice_migrator REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;
+SQL
