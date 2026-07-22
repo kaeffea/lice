@@ -1,0 +1,65 @@
+{
+  "realm": "lice",
+  "enabled": true,
+  "displayName": "LICE",
+  "displayNameHtml": "LICE",
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "registrationEmailAsUsername": false,
+  "rememberMe": false,
+  "verifyEmail": false,
+  "loginWithEmailAllowed": false,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "maxFailureWaitSeconds": 900,
+  "minimumQuickLoginWaitSeconds": 60,
+  "waitIncrementSeconds": 60,
+  "quickLoginCheckMilliSeconds": 1000,
+  "maxDeltaTimeSeconds": 43200,
+  "failureFactor": 5,
+  "loginTheme": "lice",
+  "defaultLocale": "pt-BR",
+  "internationalizationEnabled": true,
+  "supportedLocales": [
+    "pt-BR"
+  ],
+  "clients": [
+    {
+      "clientId": "lice-web",
+      "name": "LICE Web",
+      "description": "Cliente web confidencial do ambiente local do LICE",
+      "rootUrl": "http://lice.localhost:8080",
+      "adminUrl": "http://lice.localhost:8080",
+      "baseUrl": "http://lice.localhost:8080",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${LICE_OIDC_CLIENT_SECRET}",
+      "redirectUris": [
+        "http://lice.localhost:8080/api/v1/auth/callback"
+      ],
+      "webOrigins": [
+        "http://lice.localhost:8080"
+      ],
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "frontchannelLogout": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://lice.localhost:8080/acesso/sessao-encerrada",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "oidc.ciba.grant.enabled": "false",
+        "backchannel.logout.session.required": "true",
+        "backchannel.logout.revoke.offline.tokens": "true"
+      },
+      "defaultClientScopes": [],
+      "optionalClientScopes": []
+    }
+  ]
+}

@@ -19,6 +19,13 @@ build/
 coverage/
 tmp/
 *.log
+playwright-report/
+test-results/
+
+# Local infrastructure state and credentials
+.cache/
+*.pem
+*.key
 
 # Editors and operating systems
 .idea/

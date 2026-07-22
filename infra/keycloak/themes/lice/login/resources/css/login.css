@@ -1,0 +1,140 @@
+:root {
+  --lice-ink: #102a43;
+  --lice-muted: #52606d;
+  --lice-primary: #0f4c5c;
+  --lice-primary-dark: #0a3945;
+  --lice-canvas: #f3f6f5;
+  --lice-border: #cbd5df;
+  --lice-focus: #f5a623;
+}
+
+body,
+.login-pf body {
+  color: var(--lice-ink);
+  background: var(--lice-canvas);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.pf-v5-c-login,
+.pf-c-login {
+  background:
+    linear-gradient(115deg, var(--lice-primary-dark) 0 42%, transparent 42%),
+    var(--lice-canvas);
+}
+
+.pf-v5-c-login__container,
+.pf-c-login__container {
+  padding: 1rem;
+}
+
+.pf-v5-c-login__main,
+.pf-c-login__main,
+.card-pf {
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e3e9ed;
+  border-radius: 18px;
+  box-shadow: 0 18px 45px rgb(16 42 67 / 14%);
+}
+
+#kc-header-wrapper,
+.pf-v5-c-login__main-header,
+.pf-c-login__main-header {
+  color: var(--lice-ink);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.pf-v5-c-title,
+.pf-c-title,
+#kc-page-title {
+  color: var(--lice-ink);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.pf-v5-c-form__label,
+.pf-c-form__label {
+  color: var(--lice-ink);
+  font-weight: 700;
+}
+
+.pf-v5-c-form-control,
+.pf-c-form-control,
+input[type="text"],
+input[type="password"] {
+  min-height: 44px;
+  color: var(--lice-ink);
+  background: #fff;
+  border-color: var(--lice-border);
+  border-radius: 8px;
+}
+
+.pf-v5-c-button.pf-m-primary,
+.pf-c-button.pf-m-primary,
+#kc-login {
+  min-height: 46px;
+  color: #fff;
+  font-weight: 750;
+  background: var(--lice-primary);
+  border-radius: 8px;
+}
+
+.pf-v5-c-button.pf-m-primary:hover,
+.pf-c-button.pf-m-primary:hover,
+#kc-login:hover {
+  background: var(--lice-primary-dark);
+}
+
+a {
+  color: #075985;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--lice-primary-dark);
+  text-decoration-thickness: 2px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--lice-focus);
+  outline-offset: 3px;
+}
+
+.pf-v5-c-alert,
+.pf-c-alert,
+.alert {
+  border-radius: 8px;
+}
+
+#kc-info-wrapper,
+.login-pf-settings {
+  color: var(--lice-muted);
+}
+
+@media (max-width: 767px) {
+  .pf-v5-c-login,
+  .pf-c-login {
+    background: var(--lice-canvas);
+  }
+
+  .pf-v5-c-login__main,
+  .pf-c-login__main,
+  .card-pf {
+    border-radius: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
