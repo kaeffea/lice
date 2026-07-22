@@ -17,9 +17,10 @@ jobs:
   verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 35
-    env:
-      DEV_ENV: ${{ runner.temp }}/lice/dev.env
     steps:
+      - name: Configure isolated CI environment path
+        run: echo "DEV_ENV=$RUNNER_TEMP/lice/dev.env" >> "$GITHUB_ENV"
+
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
